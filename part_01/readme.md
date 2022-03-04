@@ -27,7 +27,7 @@ For our purposes, a lightning talk is a talk lasting **no more than five minutes
 6. Is this a reasonable project given the time constraints that you have?
 
 
-> Note that you *should not* prepare slides for your talk.  This will be oral pitches with discussion.
+> Note that you should prepare slides for your talk.
 
 ## Recommendations for your lightning talk
 
@@ -40,7 +40,7 @@ There is no penalty for having to switch topics or datasets in the middle of the
 
 ## Deliverables
 
-Be prepared to discuss 3 potential topics with your peers.
+Be prepared to discuss 3 potential topics with your peers with a complimentary slide deck.
 
 ## Useful Resources
 
