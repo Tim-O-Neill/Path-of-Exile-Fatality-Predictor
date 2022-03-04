@@ -16,7 +16,7 @@ One of the best ways to test ideas quickly is to share them with others. A good 
 
 **The ultimate choice of topic for your capstone project is yours!** However, this is research and development work. Sometimes projects that look easy can be difficult and vice versa. It never hurts to have a second (or third) option available.
 
-- **Goal**: Prepare a 3-5 minute lightning talk that covers three potential topics, including potential sources of data, goals, metrics and audience.
+- **Goal**: Prepare a 3-5 minute lightning talk (w/ a simple slide deck) that covers three potential topics, including potential sources of data, goals, metrics and audience.
 - **Due**: See Course Info Schedule
 
 ### **Capstone, Part 1.5:**
