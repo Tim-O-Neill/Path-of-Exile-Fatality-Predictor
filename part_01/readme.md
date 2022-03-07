@@ -4,7 +4,7 @@
 
 In this section, you will be presenting three potential topics to your classmates. You will be presenting your findings in the form of an informal lightning talk.
 
-**You do not need to prepare slides for your talk.  Just be prepared to discuss several ideas with your colleagues.**
+**Please prepare slides for your talk, and be prepared to discuss several ideas with your colleagues.**
 
 ## How to select a topic
 
