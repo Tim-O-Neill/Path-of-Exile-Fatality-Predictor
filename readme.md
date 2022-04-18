@@ -1,59 +1,47 @@
-# Capstone Project
+# Path of Exile Fatality Predictor
 
-Your Capstone project is the culmination of your time at GA. You will be tasked with developing an interesting question, collecting the data required to model that data, developing the strongest model (or models) for prediction, and communicating those findings to other data scientists and non-technical individuals. This introductory document lays out the five consitutent portions of the project and their due dates.
+## What is Path of Exile?
 
-## Your Deliverables
+Path of Exile is a free-to-play action role-playing video game developed and published by Grinding Gear Games on October 23rd, 2013. Players select from one of six base classes and fight across the continent of Wraeclast, walking the path of the exile as they go. It has a thriving multiplayer community and a number of various game modes to complete, of which the best performing players are displayed on the forums.
 
-- A well-made predictive model using either structured or unstructured machine learning techniques (or other technique approved in advanced by the global instructors), as well as clean, well-written code.
-- A technical report aimed at fellow data scientists that explains your process and findings
-- A public presentation of your findings aimed at laypeople.
+## The Goal
 
-### **[Capstone, Part 1: Topic Proposals](./part_01/)**
+My goal with this project is to provide a free and easy-to-use app that will allow players (or simply curious users) to input character data such as class, level, league and (eventually, hopefully) skills and equipment in order to predict the likelihood of character death, the location of possible character death, and the probable cause of death. At present, the models are 94% accurate with respect to character death, but do not predict location or cause.
 
-In Part 1, get started by choosing **three potential topics and problems**, describing your goals & criteria for success, potential audience(s), and identifying 1-2 potential datasets. In the field of data science, good projects are practical. Your capstone project should be manageable and affect a real world audience. This might be a domain you are familiar with, a particular interest you have, something that affects a community you are involved in, or an area that relates to a field you wish to work in.
+## The Data
 
-One of the best ways to test ideas quickly is to share them with others. A good data scientist has to be comfortable discussing ideas and presenting to audiences. That's why for Part 1 of your Capstone project, you'll be preparing a lightning talk in addition to your initial notebook outlining the scope of your project. Presentations should take no more than 3-5 minutes.
+Grinding Gear Games freely publishes information regarding player standing and rankings for each of their active leagues on their forums ([here.](https://www.pathofexile.com/forum/view-forum/leagues-and-race-events)) To minimize noise and interference in the predictive model, I chose to only pull data from leagues with the Hardcore, Solo Self-Found tags. This means that character deaths result in being permanently banned from the league, and players are not allowed to trade gear or group up with other players. 
 
-**The ultimate choice of topic for your capstone project is yours!** However, this is research and development work. Sometimes projects that look easy can be difficult and vice versa. It never hurts to have a second (or third) option available.
+|Feature|Type|Dataset|Description|
+|---|---|---|---|
+|Rank|int|1-2000|The leaderboard rank of a specific character| 
+|Account|object|name|Account name associated with the character|
+|Character|object|name|Name of the ranked character|
+|Class|object|name|Name of character's associated class|
+|Level|int|1-100|Level of listed character|
+|Experience|int|0 - 4250334444|Number of experience points character has acquired|
+|Dead|int|1-0|Whether a character has died or not. A 1 indicates death.|
+|League|int|1-0|Indicator of which League a character originated in. A 1 means the character was created in the given League|
 
-- **Goal**: Prepare a 3-5 minute lightning talk (w/ a simple slide deck) that covers three potential topics, including potential sources of data, goals, metrics and audience.
-- **Due**: See Course Info Schedule
+Note: the League columns are not native to the PoE raw files. They are an engineered feature.
 
-### **Capstone, Part 1.5:**
+## Current Status
 
-Slack the instructional team your one-sentence problem statement and whether you have your dataset in hand.
-- **Due**: See Course Info Schedule
+At present, the project takes in 16,000 characters across eight leagues, clusters them via KMeans, and then attempts to predict whether they died or not. It is very much a WIP, proof-of-concept skeleton. That said, the models are very accurate, reaching 93-94% accurate predicted mortality rate. This far exceeds the null model's output of 63.12%.
 
-### **[Capstone, Part 2: Problem Statement + EDA](./part_02/)**
+## Future Steps
 
-For Part 2, provide a clear statement of the problem that you have chosen and an overview of your approach to solving that problem. Summarize your objectives, goals & success metrics, and any risks & assumptions. Outline your proposed methods and models, perform your initial EDA, and summarize the process. **Your data should be in hand by this point in the process!**
+This project has many more steps to go before it reaches completion. Amongst them are the development of a Streamlit app in order to facilitate an easy-to-use and intuitive user interface, an expansion of current character observations to include all active and completed Leagues, the collection of enemy data to facillitate prediction of probable cause/location of character death, collection of skill and equipment data to further enhance cause/location predictions, and possibly an expansion to non-SSF Leagues to see if current models are more or less effective at predicting fatality rates.
 
-**Again, your data should be in hand by this point the process!**
 
-- **Goal**: Describe your proposed approach and summarize your initial EDA in a code submission to your local instructor ([submission link](https://docs.google.com/forms/d/e/1FAIpQLSeNOxe41oSnEdSyJca-aKLR0m_0_7lRC-LSlzK_WMIYQ_MARw/viewform?usp=sf_link))
-- **Due**: See Course Info Schedule
 
-### **[Capstone, Part 3: Progress Report + Preliminary Findings](./part_03/)**
+### Known and Suspected Hurdles
 
-In Part 3, you'll create a progress report of your work in order to get feedback along the way. Describe your approach, initial results, and any setbacks or lessons learned so far. Your report should include updated visual and statistical analysis of your data. You’ll also meet with your local instructional team to get feedback on your results so far!
+While Future Steps provides a blanket wish-list of features I want to include in the project, I am anticipating difficulties in the following sections:
 
-- **Goal**: Discuss progress and setbacks, include visual and statistical analysis, review with instructor. [Submit your progress update on this form.](https://docs.google.com/forms/d/e/1FAIpQLSeNOxe41oSnEdSyJca-aKLR0m_0_7lRC-LSlzK_WMIYQ_MARw/viewform?usp=sf_link)
-- **Due**: See Course Info Schedule
+- Equipment, Skill, and Enemy damage data is almost certainly not easily worked with, if it's even possible to find it. While they will almost certainly exist as data tables themselves, using them to predict what enemy or damage type kills the given character will almost certainly require simulating combat according to the game's engine, something far beyond my current capabilities. Therefore, until I come up with a workaround, predicting how a character dies is likely impossible.
 
-### **[Capstone, Part 4: Report Writeup + Technical Analysis](./part_04/)**
+- The model currently clusters 16,000 characters in order to generate predictions on whether they die. When a user creates a new character using the app, they'll have to be clustered accordingly in order to benefit from the increased accuracy. That being said, I'll need to create and test a cluster-predicting model for these new characters, which may prove difficult.
 
-By now, you're ready to apply your modeling skills to make machine learning predictions. Your goal for Part 4 is to develop a technical document (in the form of Jupyter notebook) that can be shared among your peers.
+- Similar to damage data above, collecting zone data for predicting location of death is currently not possible for mee, although it may be something GGG has collected for internal use. 
 
-Document your research and analysis including a summary, an explanation of your modeling approach as well as the strengths and weaknesses of any variables in the process. You should provide insight into your analysis, using best practices like cross validation or applicable prediction metrics.
-
-- **Goal**: Detailed report and code with a summary of your statistical analysis, model, and evaluation metrics.
-- **Due**: See Course Info Schedule
-
-### **[Capstone, Part 5: Presentation + Recommendations](./part_05/)**
-
-Whether during an interview or as part of a job, you will frequently have to present your findings to business partners and other interested parties - many of whom won't know anything about data science! That's why for Part 5, you'll create a presentation of your previous findings with a non-technical audience in mind.
-
-You should already have the analytical work complete, so now it's time to clean up and clarify your findings. Come up with a detailed slide deck or interactive demo that explains your data, visualizes your model, describes your approach, articulates strengths and weaknesses, and presents specific recommendations. Be prepared to explain and defend your model to an inquisitive audience!
-
-- **Goal**: Detailed presentation deck that relates your data, model, and findings to a non-technical audience.
-- **Due**: See Course Info Schedule
